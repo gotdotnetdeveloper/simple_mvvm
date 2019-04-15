@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="GCTestApp.Module.View.TestView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:convertors="clr-namespace:GCTestApp.Convertors"
+             xmlns:viewModel="clr-namespace:GCTestApp.Module.ViewModel"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance viewModel:TestViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800" 
+             Name="TestUserControlView">
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <convertors:TestConverter x:Key="TestConverter" />
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+
+
+    <Grid>
+        <StackPanel>
+
+            <TextBox Text="{Binding Model.Description}"></TextBox>
+            <!--<TextBox  Text="{Binding ., Mode=OneWay, Converter={StaticResource TestConverter}}" ></TextBox>-->
+            <TextBox Text="{Binding Model.Name}"></TextBox>
+        </StackPanel>
+            
+    </Grid>
+</UserControl>
