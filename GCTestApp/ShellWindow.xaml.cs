@@ -14,9 +14,9 @@ namespace GCTestApp
         {
             InitializeComponent();
 
-            var vm = new TestViewModel();
+            var vm = ServiceLocator.Current.GetInstance<TestViewModel>();
 
-           ServiceLocator.Current.GetInstance<WindowsManager>().ShowViewModel(ShellFrame, vm);
+           ServiceLocator.Current.GetInstance<WindowsManager>().ShowInContentControl(ShellFrame, vm);
         }
         /// <summary>
         /// Контейнер для размещения представлений АРМ.

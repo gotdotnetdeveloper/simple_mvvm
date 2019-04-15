@@ -25,7 +25,12 @@
             <TextBox Text="{Binding Model.Description}"></TextBox>
             <!--<TextBox  Text="{Binding ., Mode=OneWay, Converter={StaticResource TestConverter}}" ></TextBox>-->
             <TextBox Text="{Binding Model.Name}"></TextBox>
+
+
+            <Button Command="{Binding ShowNewCommand}">Открыть новое окно</Button>
         </StackPanel>
             
+
+
     </Grid>
 </UserControl>

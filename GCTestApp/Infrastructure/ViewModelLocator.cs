@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extras.CommonServiceLocator;
+using GCTestApp.Module.ViewModel;
+using GCTestApp.Repository;
 using Microsoft.Practices.ServiceLocation;
 
 namespace GCTestApp.Infrastructure
@@ -10,6 +12,15 @@ namespace GCTestApp.Infrastructure
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<WindowsManager>().AsSelf().AutoActivate().SingleInstance();
+
+
+            
+            builder.RegisterType<WindowsManager>().AsSelf().AutoActivate().SingleInstance();
+            builder.RegisterType<DocumentRepository>().AsSelf().AutoActivate().SingleInstance();
+
+
+            builder.RegisterType<TestViewModel>().InstancePerDependency();
+
 
             var container = builder.Build();
             var csl = new AutofacServiceLocator(container);

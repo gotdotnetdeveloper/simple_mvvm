@@ -94,6 +94,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="IShellWindow.cs" />
+    <Compile Include="Repository\DocumentRepository.cs" />
     <Compile Include="ShellWindow.xaml.cs">
       <DependentUpon>ShellWindow.xaml</DependentUpon>
     </Compile>
