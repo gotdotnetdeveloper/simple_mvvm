@@ -14,7 +14,7 @@ namespace GCTestApp
         {
             InitializeComponent();
 
-            var vm = ServiceLocator.Current.GetInstance<TestViewModel>();
+            var vm = ServiceLocator.Current.GetInstance<ITestViewModel>();
 
            ServiceLocator.Current.GetInstance<WindowsManager>().ShowInContentControl(ShellFrame, vm);
         }

@@ -12,14 +12,8 @@ namespace GCTestApp.Infrastructure
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<WindowsManager>().AsSelf().AutoActivate().SingleInstance();
-
-
-            
-            builder.RegisterType<WindowsManager>().AsSelf().AutoActivate().SingleInstance();
             builder.RegisterType<DocumentRepository>().AsSelf().AutoActivate().SingleInstance();
-
-
-            builder.RegisterType<TestViewModel>().InstancePerDependency();
+            builder.RegisterType<TestViewModel>().As<ITestViewModel>().InstancePerDependency();
 
 
             var container = builder.Build();

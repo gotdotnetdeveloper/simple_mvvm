@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convertors\TestConverter.cs" />
+    <Compile Include="Infrastructure\ITestViewModel.cs" />
     <Compile Include="Infrastructure\WindowsManager.cs" />
     <Compile Include="Module\Model\TestModel.cs" />
     <Compile Include="Module\ViewModel\TestViewModel.cs" />

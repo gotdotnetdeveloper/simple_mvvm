@@ -9,7 +9,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace GCTestApp.Module.ViewModel
 {
-    public class TestViewModel : ViewModelBase
+    public class TestViewModel : ViewModelBase , ITestViewModel
     {
         private ICommand _ShowNewCommand;
         private DocumentRepository _documentRepository;
@@ -28,7 +28,7 @@ namespace GCTestApp.Module.ViewModel
 
         private void ShowNewCommandExecute()
         {
-            ServiceLocator.Current.GetInstance<WindowsManager>().ShowInNewWindow<TestViewModel>();
+            ServiceLocator.Current.GetInstance<WindowsManager>().ShowInNewWindow<ITestViewModel>();
         }
     }
 }
