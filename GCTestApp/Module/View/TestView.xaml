@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:convertors="clr-namespace:GCTestApp.Convertors"
              xmlns:viewModel="clr-namespace:GCTestApp.Module.ViewModel"
+             xmlns:validationLabel="clr-namespace:GCTestApp.ValidationLabel"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance viewModel:TestViewModel}"
              d:DesignHeight="450" d:DesignWidth="800" 
@@ -22,9 +23,20 @@
     <Grid>
         <StackPanel>
 
-            <TextBox Text="{Binding Model.Description}"></TextBox>
+            <validationLabel:ValidationLabel
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                AttachedElement="{Binding ElementName=tbx_ModelDescription}"
+                IsTabStop="False"
+                Label="Вид и краткое содержимое" />
+
+
+
+            <TextBox x:Name="tbx_ModelDescription" 
+                     Text="{Binding Model.Description, Mode=TwoWay, ValidatesOnDataErrors=True, ValidatesOnNotifyDataErrors=True, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
+                     ></TextBox>
             <!--<TextBox  Text="{Binding ., Mode=OneWay, Converter={StaticResource TestConverter}}" ></TextBox>-->
-            <TextBox Text="{Binding Model.Name}"></TextBox>
+            <TextBox Text="{Binding Model.Name, ValidatesOnExceptions=True, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged }"></TextBox>
 
 
             <Button Command="{Binding ShowNewCommand}">Открыть новое окно</Button>

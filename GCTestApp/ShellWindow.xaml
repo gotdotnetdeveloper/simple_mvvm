@@ -20,10 +20,6 @@
     </Window.Resources>
 
     <Grid>
-        <ContentControl
-            Name="FrameMain"
-        
-            x:FieldModifier="public"
-             />
+        <ContentControl Name="FrameMain" x:FieldModifier="public" />
     </Grid>
 </Window>

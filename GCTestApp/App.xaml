@@ -10,8 +10,10 @@
         <ResourceDictionary>
             <infrastructure:ViewModelLocator x:Key="Locator"  />
 
-          
-        
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GCTestApp;component/ValidationLabel/Dictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

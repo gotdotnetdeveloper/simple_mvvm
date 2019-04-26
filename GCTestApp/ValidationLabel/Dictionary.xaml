@@ -1,0 +1,89 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:GCTestApp.ValidationLabel"
+                    xmlns:convertors="clr-namespace:GCTestApp.Convertors"
+                    xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=System">
+   
+    <Geometry x:Key="ErrorGeometry">M479.963,425.047L269.051,29.854c-5.259-9.88-15.565-16.081-26.782-16.081h-0.03c-11.217,0-21.492,6.171-26.782,16.051L3.603,425.016c-5.046,9.485-4.773,20.854,0.699,29.974c5.502,9.15,15.413,14.774,26.083,14.774H453.12c10.701,0,20.58-5.594,26.083-14.774C484.705,445.84,484.979,434.471,479.963,425.047z M242.239,408.965c-16.781,0-30.399-13.619-30.399-30.399c0-16.78,13.619-30.399,30.399-30.399c16.75,0,30.399,13.619,30.399,30.399C272.638,395.346,259.02,408.965,242.239,408.965zM272.669,287.854c0,16.811-13.649,30.399-30.399,30.399c-16.781,0-30.399-13.589-30.399-30.399V166.256c0-16.781,13.619-30.399,30.399-30.399c16.75,0,30.399,13.619,30.399,30.399V287.854z</Geometry>
+    <Geometry x:Key="ValidGeometry">
+        M99.85,299.045c2.813,2.813,6.629,4.393,10.607,4.393c3.979,0,7.794-1.581,10.606-4.393L325.56,94.548
+        c2.814-2.813,4.394-6.628,4.394-10.606c0-3.979-1.58-7.794-4.394-10.607l-42.427-42.426c-5.857-5.857-15.355-5.858-21.213,0
+        L110.461,182.37l-42.428-42.428c-2.813-2.813-6.629-4.394-10.607-4.394s-7.793,1.581-10.606,4.394L4.393,182.369
+        c-5.857,5.858-5.857,15.355,0,21.213L99.85,299.045z
+    </Geometry>
+
+    <componentModel:BooleanConverter x:Key="BooleanConverter" />
+    <convertors:BooleanToVisibilityHideConverter x:Key="BooleanToVisibilityHideConverter" />
+    <convertors:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+
+    <Style TargetType="{x:Type local:ValidationLabel}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ValidationLabel}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Content="{TemplateBinding Label}">
+                            <Label.Style>
+                                <Style TargetType="Label">
+                                    <Setter Property="FontFamily" Value="Roboto" />
+                                    <Setter Property="FontSize" Value="14" />
+                                    <Setter Property="Margin" Value="2,2,2,2" />
+                                    <Setter Property="FontWeight" Value="DemiBold" />
+                                    <Setter Property="Foreground" Value="#FF9E9E9E" />
+                                    <Setter Property="ToolTip" Value="" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:ValidationLabel}, Path=AttachedElement.(Validation.HasError), TargetNullValue=False, FallbackValue=False}" Value="True">
+                                            <Setter Property="Foreground" Value="Red" />
+                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:ValidationLabel}, Path=AttachedElement.(Validation.Errors)[0].ErrorContent}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <Path
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Width="16"
+                            Height="16"
+                            Margin="2,2,2,2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{StaticResource ErrorGeometry}"
+                            Fill="Red"
+                            Stretch="Uniform"
+                            ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:ValidationLabel}, Path=AttachedElement.(Validation.Errors)[0].ErrorContent}"
+                            
+                            Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:ValidationLabel}, Path=AttachedElement.(Validation.HasError), TargetNullValue={x:Static Visibility.Collapsed}, 
+                            FallbackValue={x:Static Visibility.Collapsed}, Converter={StaticResource BooleanToVisibilityHideConverter }}" />
+
+                        <!--Visibility="{Binding IsDeveloper, Mode=OneWay, Converter={convertors:BooleanConverter FalseValue=Collapsed, TrueValue=Visible}}"/>-->
+                        
+                        <Path
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Width="16"
+                            Height="16"
+                            Margin="2,2,2,2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{StaticResource ValidGeometry}"
+                            Fill="Green"
+                            Stretch="Uniform"
+                            Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:ValidationLabel}, Path=AttachedElement.(Validation.HasError), TargetNullValue={x:Static Visibility.Collapsed}, 
+                            FallbackValue={x:Static Visibility.Collapsed}, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+
+                            <!--Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:ValidationLabel}, Path=AttachedElement.(Validation.HasError), TargetNullValue={x:Static Visibility.Visible}, FallbackValue={x:Static Visibility.Visible}, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />-->
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
