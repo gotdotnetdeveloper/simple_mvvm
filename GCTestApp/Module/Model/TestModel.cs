@@ -1,10 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections;
+using System.ComponentModel;
 using System.Linq;
 using FluentValidation;
 
 namespace GCTestApp.Module.Model
 {
-    public class TestModel : IDataErrorInfo
+    public class TestModel : INotifyDataErrorInfo
     {
         TestValidator _validator  ;
         public TestModel()
@@ -16,17 +18,26 @@ namespace GCTestApp.Module.Model
         public string Name { get; set; }
         public string Description{ get; set; }
 
-        /// <summary>
-        /// Индексатор, в котором указано конкретное свойство, в котором произошла ошибка.
-        /// </summary>
-        /// <param name="columnName">Наименование проверяемого свойства.</param>
-        /// <returns>Текст ошибки или пустая строка если ошибки отсутствуют.</returns>
-        public string this[string columnName] =>
-            _validator.Validate(this, columnName).Errors.FirstOrDefault()?.ErrorMessage;
 
-        /// <summary>
-        /// Строка - указание общей ошибки.
-        /// </summary>
-        public string Error => _validator.Validate(this).Errors.FirstOrDefault()?.ErrorMessage;
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return _validator.Validate(this).Errors;
+        }
+
+        public bool HasErrors
+        {
+            get
+            {
+                return !_validator.Validate(this).IsValid;
+            }
+        }
+
+        public void RaiseErrorsChanged(string propertyName)
+        {
+            if (ErrorsChanged != null)
+                ErrorsChanged(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
     }
 }
